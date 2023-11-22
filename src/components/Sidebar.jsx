@@ -1,12 +1,12 @@
-import React, { useEffect} from "react";
+import React, { useEffect, useState } from "react";
 import { Stack } from "@mui/material";
 
-import { groups } from "../utils/constants";
+// import { groups } from "../utils/constants";
 import { getGroups } from "../api/groups";
 import axios from "axios";
 
 const Categories = ({ selectedCategory, setSelectedCategory }) => {
-
+const [groups,setGroups]=useState([])
 
  // const handleGroup =()=>{
   //   fetch(`https://4d0d-2405-201-c008-d848-80ef-c5ee-d3a9-1177.ngrok-free.app/reports/queries_for_group_id/0`, {
@@ -33,11 +33,17 @@ const Categories = ({ selectedCategory, setSelectedCategory }) => {
    })
    console.log("res",res)
   }
+
+  const getAllGroups=async ()=>{
+  const res=await getGroups()
+  setGroups(res)
+
+  }
  
   useEffect(()=>{
-    getGroups()
+    getAllGroups()
   
-  })
+  },[])
 return (
   <Stack
     direction="row"
@@ -48,7 +54,7 @@ return (
       flexDirection: { md: "column" },
     }}
   >
-    {groups.map((category) => (
+    {groups.length>0&&groups.map((category) => (
       <button
         className="category-btn"
         onClick={()=>{handleGroup(category.id)}}
