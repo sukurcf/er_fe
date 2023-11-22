@@ -1,24 +1,59 @@
-import React from "react";
+import React, { useEffect} from "react";
 import { Stack } from "@mui/material";
 
-import { categories } from "../utils/constants";
+import { groups } from "../utils/constants";
+import { getGroups } from "../api/groups";
+import axios from "axios";
 
-const Categories = ({ selectedCategory, setSelectedCategory }) => (
+const Categories = ({ selectedCategory, setSelectedCategory }) => {
+
+
+ // const handleGroup =()=>{
+  //   fetch(`https://4d0d-2405-201-c008-d848-80ef-c5ee-d3a9-1177.ngrok-free.app/reports/queries_for_group_id/0`, {
+  //   headers: {
+  //     'Accept': 'application/json',
+  //     'ngrok-skip-browser-warning': 'ssss',
+  //     'User-Agent': 'custom'
+  //   },
+  // })
+  // .then(response => response.json())
+  // .then(data => console.log(data))
+  // .catch(error => console.error('Error:', error));
+  // }
+
+
+  const handleGroup=async(id)=>{
+   const res=await axios.get(`https://2093-2405-201-c008-d848-80ef-c5ee-d3a9-1177.ngrok-free.app/reports/queries_for_group_id/0`,{
+    headers:{
+      "Accept":"application/json",
+      "Content-Type": "application/json",
+      'ngrok-skip-browser-warning': "true",
+          'User-Agent': 'custom'
+    }
+   })
+   console.log("res",res)
+  }
+ 
+  useEffect(()=>{
+    getGroups()
+  
+  })
+return (
   <Stack
     direction="row"
     sx={{
-      overflowY: "auto",
+      border:'1px solid gray',
+      // overflowY: "auto",
       height: { sx: "auto", md: "95%" },
       flexDirection: { md: "column" },
     }}
   >
-    {categories.map((category) => (
+    {groups.map((category) => (
       <button
         className="category-btn"
-        onClick={() => setSelectedCategory(category.name)}
+        onClick={()=>{handleGroup(category.id)}}
         style={{
           background: category.name === selectedCategory && "#FC1503",
-          color: "white",
         }}
         key={category.name}
       >
@@ -31,6 +66,6 @@ const Categories = ({ selectedCategory, setSelectedCategory }) => (
       </button>
     ))}
   </Stack>
-);
-
+)
+      }
 export default Categories;
