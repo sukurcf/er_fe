@@ -1,7 +1,6 @@
 import { Box, Grid } from "@mui/material";
 import React from "react";
 import Categories from "./Sidebar";
-import { Outlet } from "react-router-dom";
 import Navbar from "./Navbar";
 import DynamicBody from "./DynamicBody";
 

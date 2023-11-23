@@ -10,12 +10,16 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import React, { useState } from "react";
-import { default0, headers, rows, selectedItemData } from "../utils/constants";
+import React, { useEffect, useState } from "react";
+import { headers, rows, selectedItemData } from "../utils/constants";
 import DynamicTable from "./shared/DynamicTable";
-
+import { useSelector } from "react-redux";
+import { getQueriesForGroup } from "../api/getQueriesForGroup";
 const DynamicBody = () => {
   const [selItem, setSelItem] = useState(null);
+  const [queryItems, setQueryItems] = useState([]);
+
+  const groupId = useSelector((state) => state.group.groupId);
 
   const handleChange = (event) => {
     setSelItem(event.target.value);
@@ -63,6 +67,17 @@ const DynamicBody = () => {
     }
   };
 
+  const getDropdownItems = async () => {
+    console.log("getDropdownItems");
+    const res = await getQueriesForGroup(groupId);
+    setQueryItems(res);
+  };
+
+  useEffect(() => {
+    console.log("useEffect");
+    getDropdownItems();
+  }, [groupId]);
+
   return (
     <Box m={2}>
       <Stack direction="row" justifyContent="space-even">
@@ -76,7 +91,7 @@ const DynamicBody = () => {
               label="Select"
               onChange={handleChange}
             >
-              {default0.queries.map((ele) => (
+              {queryItems.map((ele) => (
                 <MenuItem value={ele.id}>{ele.name}</MenuItem>
               ))}
             </Select>
