@@ -7,9 +7,11 @@ import { getGroupId } from "../reduxtoolkit/slices/groupIdSlice";
 
 const Categories = ({ selectedCategory}) => {
 const [groups,setGroups]=useState([])
+const [selGroup,setSelGroup]=useState(null)
 
 const dispatch =useDispatch()
   const handleGroup=(id)=>{
+    setSelGroup(id)    
     dispatch(getGroupId(id))
   }
   
@@ -35,11 +37,8 @@ return (
   >
     {groups.length>0&&groups.map((ele) => (
       <button
-        className="category-btn"
+        className={selGroup===ele.id?'selectedGroup':'category-btn'}
         onClick={()=>{handleGroup(ele.id)}}
-        style={{
-          background: ele.name === selectedCategory && "#FC1503",
-        }}
         key={ele.name}
       >
         <span style={{ opacity: ele.name === selectedCategory ? "1" : "0.8" }}>

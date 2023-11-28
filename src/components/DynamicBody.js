@@ -9,18 +9,21 @@ import {
   Stack,
   TextField,
   Typography,
+  Grid,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { headers, rows, selectedItemData } from "../utils/constants";
 import DynamicTable from "./shared/DynamicTable";
 import { useSelector } from "react-redux";
 import { getQueriesForGroup } from "../api/getQueriesForGroup";
+import axios from "axios";
 const DynamicBody = () => {
   const [selItem, setSelItem] = useState(null);
   const [queryItems, setQueryItems] = useState([]);
-
+  const [formInputs, setFormInputs] = useState([]);
   const groupId = useSelector((state) => state.group.groupId);
   const handleChange = (event) => {
+    console.log("id", event.target.value);
     setSelItem(event.target.value);
   };
 
@@ -29,35 +32,47 @@ const DynamicBody = () => {
       case "single_value": {
         return (
           <Box sx={{ mb: "5px" }}>
-            <Stack direction="row" alignItems="center" gap={2}>
-              <Typography>{obj.label}:</Typography>
-              <TextField type="text" size="small" fullWidth></TextField>
-            </Stack>
+            <Grid container spacing={2}>
+              <Grid item xs={4}>
+                <Typography align="right">{obj.label}:</Typography>
+              </Grid>
+              <Grid item xs={8}>
+                <TextField type="text" size="small" fullWidth></TextField>
+              </Grid>
+            </Grid>
           </Box>
         );
       }
       case "multi_value": {
         return (
           <Box sx={{ mb: "5px" }}>
-            <Stack direction="row" alignItems="center" gap={2}>
-              <Typography>{obj.label}:</Typography>
-              <TextField
-                size="small"
-                multiline
-                fullWidth
-                maxRows={4}
-              ></TextField>
-            </Stack>
+            <Grid container spacing={2}>
+              <Grid item xs={4}>
+                <Typography align="right">{obj.label}:</Typography>
+              </Grid>
+              <Grid item xs={8}>
+                <TextField
+                  size="small"
+                  multiline
+                  fullWidth
+                  maxRows={4}
+                ></TextField>
+              </Grid>
+            </Grid>
           </Box>
         );
       }
       case "date": {
         return (
           <Box sx={{ mb: "5px" }}>
-            <Stack direction="row" alignItems="center" gap={2}>
-              <Typography>{obj.label}:</Typography>
-              <TextField fullWidth type="date" size="small"></TextField>
-            </Stack>
+            <Grid container spacing={2}>
+              <Grid item xs={4}>
+                <Typography align="right">{obj.label}:</Typography>
+              </Grid>
+              <Grid item xs={8}>
+                <TextField fullWidth type="date" size="small"></TextField>
+              </Grid>
+            </Grid>
           </Box>
         );
       }
@@ -67,27 +82,37 @@ const DynamicBody = () => {
   };
 
   const getDropdownItems = async () => {
-    console.log("getDropdownItems");
     const res = await getQueriesForGroup(groupId);
+    console.log("getDropdownItems", res);
     setQueryItems(res);
   };
 
+  const getForm = async () => {
+    let res = await axios.get(
+      `http://3.28.135.176:8000/reports/query_filters/${selItem}`
+    );
+    console.log("res in form api", res);
+    setFormInputs(res.data.query_filters);
+  };
+
   useEffect(() => {
-    console.log("useEffect");
+    console.log("selItem", selItem);
     getDropdownItems();
   }, [groupId]);
-
+  useEffect(() => {
+    getForm();
+  }, [selItem]);
   return (
     <Box m={2}>
-      <Stack direction="row" justifyContent="space-even">
+      <Stack direction="row" justifyContent="space-even" minHeight="30vh">
         <Box width="50%">
           <FormControl sx={{ m: 1, minWidth: 210 }} size="small">
-            <InputLabel id="demo-simple-select-label">Select</InputLabel>
+            <InputLabel id="demo-simple-select-label">Select Report</InputLabel>
             <Select
               labelId="demo-simple-select-label"
               id="demo-simple-select"
               value={selItem}
-              label="Select"
+              label="Select Report"
               onChange={handleChange}
             >
               {queryItems.map((ele) => (
@@ -97,7 +122,7 @@ const DynamicBody = () => {
           </FormControl>
         </Box>
         <Box sx={{ ml: 1 }}>
-          {selectedItemData.query_filters.map((ele, index) => {
+          {formInputs.map((ele, index) => {
             return getComponent(ele);
           })}
           <Box width="100%" sx={{ textAlign: "center" }}>
