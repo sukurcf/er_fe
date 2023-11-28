@@ -126,7 +126,12 @@ const DynamicBody = () => {
             return getComponent(ele);
           })}
           <Box width="100%" sx={{ textAlign: "center" }}>
-            <Button size="small" variant="contained" sx={{ ml: 7 }}>
+            <Button
+              color="primary"
+              size="small"
+              variant="contained"
+              sx={{ ml: 7 }}
+            >
               Search
             </Button>
           </Box>
