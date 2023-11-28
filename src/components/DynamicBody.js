@@ -36,7 +36,7 @@ const DynamicBody = () => {
               <Grid item xs={4}>
                 <Typography align="right">{obj.label}:</Typography>
               </Grid>
-              <Grid item xs={8}>
+              <Grid item xs={5}>
                 <TextField type="text" size="small" fullWidth></TextField>
               </Grid>
             </Grid>
@@ -50,7 +50,7 @@ const DynamicBody = () => {
               <Grid item xs={4}>
                 <Typography align="right">{obj.label}:</Typography>
               </Grid>
-              <Grid item xs={8}>
+              <Grid item xs={5}>
                 <TextField
                   size="small"
                   multiline
@@ -69,7 +69,7 @@ const DynamicBody = () => {
               <Grid item xs={4}>
                 <Typography align="right">{obj.label}:</Typography>
               </Grid>
-              <Grid item xs={8}>
+              <Grid item xs={5}>
                 <TextField fullWidth type="date" size="small"></TextField>
               </Grid>
             </Grid>
@@ -105,7 +105,7 @@ const DynamicBody = () => {
   return (
     <Box m={2}>
       <Stack direction="row" justifyContent="space-even" minHeight="30vh">
-        <Box width="50%">
+        <Box width="40%">
           <FormControl sx={{ m: 1, minWidth: 210 }} size="small">
             <InputLabel id="demo-simple-select-label">Select Report</InputLabel>
             <Select
@@ -121,11 +121,11 @@ const DynamicBody = () => {
             </Select>
           </FormControl>
         </Box>
-        <Box sx={{ ml: 1 }}>
+        <Box sx={{ ml: 1 }} width="70%">
           {formInputs.map((ele, index) => {
             return getComponent(ele);
           })}
-          <Box width="100%" sx={{ textAlign: "center" }}>
+          <Box sx={{ textAlign: "center" }}>
             <Button
               color="primary"
               size="small"
