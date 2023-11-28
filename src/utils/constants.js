@@ -93,13 +93,43 @@ export const headers = [
   { id: "age", label: "Age" },
   { id: "city", label: "City" },
   { id: "dist", label: "Dist" },
+  { id: "address", label: "Address" },
 ];
 
 // Sample rows
 export const rows = [
-  { id: 1, name: "John", age: 25, city: "abc", dist: "Nellie" },
-  { id: 2, name: "Jane", age: 30, city: "efg", dist: "adapa" },
-  { id: 3, name: "Bob", age: 22, city: "hij", dist: "Anneal" },
+  {
+    id: 1,
+    name: "John",
+    age: 25,
+    city: "abc",
+    dist: "Nellie",
+    address: "Tanoan",
+  },
+  {
+    id: 2,
+    name: "Jane",
+    age: 30,
+    city: "efg",
+    dist: "adapa",
+    address: "ne;;ore",
+  },
+  {
+    id: 3,
+    name: "Bob",
+    age: 22,
+    city: "hij",
+    dist: "Anneal",
+    address: "gudur",
+  },
+  {
+    id: 4,
+    name: "jan",
+    age: 28,
+    city: "klm",
+    dist: "animal",
+    address: "Tano",
+  },
 ];
 
 export const demoThumbnailUrl = "https://i.ibb.co/G2L2Gwp/API-Course.png";

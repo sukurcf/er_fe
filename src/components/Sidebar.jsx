@@ -2,7 +2,6 @@ import React, {  useEffect, useState } from "react";
 import { Stack } from "@mui/material";
 
 import { getGroups } from "../api/groups";
-import axios from "axios";
 import { useDispatch } from "react-redux";
 import { getGroupId } from "../reduxtoolkit/slices/groupIdSlice";
 

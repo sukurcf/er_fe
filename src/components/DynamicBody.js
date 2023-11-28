@@ -20,7 +20,6 @@ const DynamicBody = () => {
   const [queryItems, setQueryItems] = useState([]);
 
   const groupId = useSelector((state) => state.group.groupId);
-
   const handleChange = (event) => {
     setSelItem(event.target.value);
   };
